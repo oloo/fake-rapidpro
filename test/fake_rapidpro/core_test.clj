@@ -2,5 +2,5 @@
   (:require [fake-rapidpro.core :refer :all])
   (:use midje.sweet))
 
-(fact "This is a sample test that should pass"
+(fact "This is a sample test"
    (and true true) => true)
