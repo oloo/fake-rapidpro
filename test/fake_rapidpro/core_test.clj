@@ -1,7 +1,6 @@
 (ns fake-rapidpro.core-test
-  (:require [clojure.test :refer :all]
-            [fake-rapidpro.core :refer :all]))
+  (:require [fake-rapidpro.core :refer :all])
+  (:use midje.sweet))
 
-(deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+(fact "This is a sample test that should pass"
+   (and true true) => true)
