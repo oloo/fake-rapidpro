@@ -1,36 +1,25 @@
 # fake-rapidpro
 
-FIXME: description
+This is a clojure application that
 
-## Installation
+## Testing
+To run all the tests, run the following command
 
-Download from http://example.com/FIXME.
+    $ lein midje
+
+## Building
+
+Install lein
+Run the following command:
+
+    $ lein uberjar
 
 ## Usage
 
-FIXME: explanation
+To run the application, run the  following command. Keep in mind that for now args are optional
 
-    $ java -jar fake-rapidpro-0.1.0-standalone.jar [args]
-
-## Options
-
-FIXME: listing of options this app accepts.
-
-## Examples
-
-...
-
-### Bugs
-
-...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
+    $ java -jar fake-rapidpro-0.1.0.jar [args]
 
 ## License
 
-Copyright © 2015 FIXME
-
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+Distributed under the Eclipse Public License
