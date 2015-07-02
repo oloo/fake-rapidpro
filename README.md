@@ -1,4 +1,4 @@
-# fake-rapidpro
+# fake-rapidpro [![Build Status](https://travis-ci.org/oloo/fake-rapidpro.svg)](https://travis-ci.org/oloo/fake-rapidpro)
 
 This is a clojure application that is used when testing an application that works with RapidPro.
 Fake RapidPro would act as a test double which would behave exactly as RapidPro would in the case when calls to RapidPro
