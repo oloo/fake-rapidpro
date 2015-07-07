@@ -39,7 +39,7 @@ Note that the port can change depending on the configuration passed while starti
 
 ### Response
 
-STATUS: 200 OK
+STATUS: `200 OK`
 
 ## Testing
 To run all the tests, run the following command
