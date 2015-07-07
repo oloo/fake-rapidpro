@@ -10,20 +10,22 @@ Currently starting a flow for a single contact is as follows:
 
 ### Request
 
-URL: http://localhost:3000/api/v1/runs.json
+URL   http://localhost:3000/api/v1/runs.json
 
 METHOD: POST
 
 HEADER:
+```json
   {
     "Authorization": "Token SAMPLE_TOKEN",
     "Content-Type": "application/json"
     }
-
-DATA:
-  {
+```
+DATA: 
+```json
+{
     "flow_uuid": "f5901b62-ba76-4003-9c62-72fdacc1b7b7",
-    "groups": ["b775ea51-b847-4a20-b668-6c4ce2f61356"]
+    "groups": ["b775ea51-b847-4a20-b668-6c4ce2f61356"],
     "contacts": ["09d23a05-47fe-11e4-bfe9-b8f6b119e9ab", "f23777a3-e606-41d8-a925-3d87370e1a2b"],
     "restart_participants": true,
     "extra":
@@ -31,7 +33,9 @@ DATA:
         "Name":"John Doe"
       }
     }
-**Note that the port can change depending on the configuration passed while starting up the server**
+  ```
+
+Note that the port can change depending on the configuration passed while starting up the server
 
 ### Response
 
