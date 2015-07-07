@@ -8,17 +8,25 @@
   (if (= "rapidpro" (get-in ctx [:request :params "type"]))
       ctx))
 
+(defn handle-post
+  [ctx]
+  (let [header (get-in ctx [:request :header])
+        body (get-in ctx [:request :body])]
+        {:header header :body body}))
+
 (defroutes app
   (ANY "/" []
     (resource
       :available-media-types ["text/html"]
       :handle-ok "RapidPro server is up"))
-  (ANY "/api" []
+  (ANY "/api/v1/runs.json" []
     (resource
-      :available-media-types ["text/html"]
+      :allowed-methods [:post]
+      :available-media-types ["application/json"]
       :exists? validate-params
-      :handle-ok "Correct parameter value"
-      :handle-not-found "Wrong value for parameter or param not specified")))
+      :handle-ok "OK"
+      :handle-not-found "Wrong value for parameter or param not specified"
+      :post! handle-post)))
 
 (def handler
   (-> app
