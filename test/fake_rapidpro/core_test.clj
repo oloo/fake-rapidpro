@@ -14,9 +14,10 @@
 
 (fact "Starting a run for a contact with a token returns OK"
       (let [response (app
-                       (mock/request
-                         :post "/api/v1/runs.json"
-                         {:content-type "application/json"
-                          :body         "{ \"flow_uuid\" : 123}"}))]
+                       (->
+                         (mock/request
+                           :post "/api/v1/runs.json"
+                           {:body "{ \"flow_uuid\" : 123}"})
+                         (mock/header :Authorization "Token SampleToken")))]
         (:status response) => 201))
 

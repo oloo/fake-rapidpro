@@ -7,7 +7,7 @@
 
 (defn- has-token?
   [request]
-  (not (nil? (get-in request [:headers :Authorization]))))
+  (not (nil? (get-in request [:headers "authorization"]))))
 
 (defn validate-payload
   [request]
