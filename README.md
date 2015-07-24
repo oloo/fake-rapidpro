@@ -1,6 +1,6 @@
 # fake-rapidpro [![Build Status](https://travis-ci.org/oloo/fake-rapidpro.svg)](https://travis-ci.org/oloo/fake-rapidpro)
 
-This is a Clojure application that is used when testing an application that works with RapidPro.
+This is a Clojure web application that is used when testing an application that works with RapidPro.
 Fake RapidPro would act as a test double which would behave exactly as RapidPro would in the case when calls to RapidPro
 are not being mocked out. This would typically be the case when doing end to end tests
 
