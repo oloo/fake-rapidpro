@@ -9,15 +9,17 @@
   [request]
   (not (nil? (get-in request [:headers "authorization"]))))
 
-(defn valid-request?
-  [request]
-  (let [flow (get-in request [:flow])
-        phone (get-in request [:phone])]
+(defn valid-run-request?
+  [body]
+  (let [flow (get-in body [:flow])
+        phone (get-in body [:phone])]
     (every? #(not (nil? %)) [flow (first phone)])))
 
-(defn validate-payload
+(defn validate-run-post
   [request]
-  (if (has-token? request)
+  (if (and (has-token? request)
+           (valid-run-request?
+               (get-in request [:body])))
     {:status 201}
     {:status 400}))
 
@@ -27,7 +29,7 @@
                {:status 200
                 :body   "RapidPro server is up"}))
            (context "/api/v1/runs.json" []
-             (POST "/" [] validate-payload)))
+             (POST "/" [] validate-run-post)))
 
 (def app
   (-> app-routes

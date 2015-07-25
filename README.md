@@ -24,7 +24,7 @@ HEADER:
 DATA:
 ```json
 {
-    "flow_uuid": "f5901b62-ba76-4003-9c62-72fdacc1b7b7",
+    "flow": "f5901b62-ba76-4003-9c62-72fdacc1b7b7",
     "phone": ["+256779500799"],
     "extra":
       {
@@ -37,7 +37,7 @@ Alternatively, a flow can be started for a contact basing on their UUID on Rapid
 
 ```json
 {
-    "flow_uuid": "f5901b62-ba76-4003-9c62-72fdacc1b7b7",
+    "flow": "f5901b62-ba76-4003-9c62-72fdacc1b7b7",
     "contacts": ["09d23a05-47fe-11e4-bfe9-b8f6b119e9ab"],
     "extra":
       {
