@@ -6,7 +6,7 @@ are not being mocked out. This would typically be the case when doing end to end
 
 Version 1 of the RapidPro API found which is detailed at http://rapidpro.io/api/v1
 
-Currently starting a flow for a single contact is as follows:
+Currently starting a flow for a contact by phone number is as follows:
 
 ### Request
 
@@ -25,9 +25,20 @@ DATA:
 ```json
 {
     "flow_uuid": "f5901b62-ba76-4003-9c62-72fdacc1b7b7",
-    "groups": ["b775ea51-b847-4a20-b668-6c4ce2f61356"],
-    "contacts": ["09d23a05-47fe-11e4-bfe9-b8f6b119e9ab", "f23777a3-e606-41d8-a925-3d87370e1a2b"],
-    "restart_participants": true,
+    "phone": ["+256779500799"],
+    "extra":
+      {
+        "Name":"John Doe"
+      }
+    }
+  ```
+
+Alternatively, a flow can be started for a contact basing on their UUID on RapidPro with the request data as follows
+
+```json
+{
+    "flow_uuid": "f5901b62-ba76-4003-9c62-72fdacc1b7b7",
+    "contacts": ["09d23a05-47fe-11e4-bfe9-b8f6b119e9ab"],
     "extra":
       {
         "Name":"John Doe"

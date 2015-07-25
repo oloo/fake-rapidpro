@@ -9,6 +9,12 @@
   [request]
   (not (nil? (get-in request [:headers "authorization"]))))
 
+(defn valid-request?
+  [request]
+  (let [flow (get-in request [:flow])
+        phone (get-in request [:phone])]
+    (every? #(not (nil? %)) [flow (first phone)])))
+
 (defn validate-payload
   [request]
   (if (has-token? request)
