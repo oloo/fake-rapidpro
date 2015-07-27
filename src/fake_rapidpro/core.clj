@@ -1,15 +1,36 @@
 (ns fake-rapidpro.core
   (:use compojure.core
         ring.middleware.json)
-  (:require [compojure.handler :as handler]
-            [compojure.route :as route]
+  (:require [compojure.handler]
+            [compojure.route]
             [ring.util.response :refer [response]]))
 
 (defn- has-token?
   [request]
   (not (nil? (get-in request [:headers "authorization"]))))
 
-(defn valid-run-request?
+(defn- flow-valid?
+  [flow]
+  (not (nil? flow)))
+
+(defn- config-response-valid?
+  [response]
+  (every? true?
+  (map #(contains? response %) [:phone :step :text :webhook])))
+
+(defn- config-responses-valid?
+  [responses]
+  (and
+    (not (empty? responses))
+    (every? true? (map config-response-valid? responses))))
+
+(defn flow-config-valid?
+  [body]
+  (let [flow (get-in body [:flow])
+        responses (get-in body [:responses])]
+    (and (flow-valid? flow) (config-responses-valid? responses))))
+
+(defn run-request-valid?
   [body]
   (let [flow (get-in body [:flow])
         phone (get-in body [:phone])]
@@ -18,7 +39,7 @@
 (defn validate-run-post
   [request]
   (if (and (has-token? request)
-           (valid-run-request?
+           (run-request-valid?
                (get-in request [:body])))
     {:status 201}
     {:status 400}))
