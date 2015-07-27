@@ -25,15 +25,15 @@
     (every? true? (map config-response-valid? responses))))
 
 (defn flow-config-valid?
-  [body]
-  (let [flow (get-in body [:flow])
-        responses (get-in body [:responses])]
+  [flow-config]
+  (let [flow (get-in flow-config [:flow])
+        responses (get-in flow-config [:responses])]
     (and (flow-valid? flow) (config-responses-valid? responses))))
 
 (defn run-request-valid?
-  [body]
-  (let [flow (get-in body [:flow])
-        phone (get-in body [:phone])]
+  [run-request]
+  (let [flow (get-in run-request [:flow])
+        phone (get-in run-request [:phone])]
     (every? #(not (nil? %)) [flow (first phone)])))
 
 (defn validate-run-post
@@ -43,6 +43,11 @@
                (get-in request [:body])))
     {:status 201}
     {:status 400}))
+
+(defn add-flow
+  [flow-config]
+  (if-not (flow-config-valid? flow-config)
+    (throw (IllegalArgumentException. "Wrong Configuration format"))))
 
 (defroutes app-routes
            (context "/" []
