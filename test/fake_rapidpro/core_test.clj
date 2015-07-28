@@ -27,4 +27,49 @@
                                                       :name "John Doe"
                                                       }}))
                                 ))]
-               (:status response) => 201)))
+               (:status response) => 201))
+
+       (background (before :facts (clear-flows))
+                   (after :facts (clear-flows)))
+
+       (fact "An invalid flow-configuration is not added"
+             (let [response (app
+                              (->
+                                (mock/request :post "/api/v1/flow-configs")
+                                (mock/content-type "application/json")
+                                (mock/body (json/generate-string
+                                             {
+                                              :flow      "23493-234234-23432-2342-3432"
+                                              :responses [{
+                                                           :phone   "+256 779500794"
+                                                           }]
+                                              }))))]
+               (:status response) => 400
+               (flow "23493-234234-23432-2342-3432") => nil))
+       
+       (fact "A valid flow-configuration is successfully added"
+             (let [response (app
+                              (->
+                                (mock/request :post "/api/v1/flow-configs")
+                                (mock/content-type "application/json")
+                                (mock/body (json/generate-string
+                                             {
+                                              :flow      "23493-234234-23432-2342-3432"
+                                              :responses [{
+                                                           :phone   "+256 779500794"
+                                                           :step    "23493-234234-23432-2342-3432"
+                                                           :text    "Yes"
+                                                           :webhook "http://localhost:3000/webhook"
+                                                           }]
+                                              }))))]
+               (:status response) => 201
+               (flow "23493-234234-23432-2342-3432") =>
+               {
+                :flow      "23493-234234-23432-2342-3432"
+                :responses [{
+                             :phone   "+256 779500794"
+                             :step    "23493-234234-23432-2342-3432"
+                             :text    "Yes"
+                             :webhook "http://localhost:3000/webhook"
+                             }]
+                })))

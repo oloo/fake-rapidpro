@@ -44,10 +44,29 @@
     {:status 201}
     {:status 400}))
 
+(def ^:private flows (atom {}))
+
+(defn flow
+  [flow-uuid]
+  (get @flows flow-uuid))
+
+(defn clear-flows
+  []
+  (reset! flows {}))
+
 (defn add-flow
   [flow-config]
-  (if-not (flow-config-valid? flow-config)
+  (if (flow-config-valid? flow-config)
+    (swap! flows assoc (:flow flow-config) flow-config)
     (throw (IllegalArgumentException. "Wrong Configuration format"))))
+
+(defn add-flow-handler
+  [request]
+  (try
+    (add-flow (get-in request [:body]))
+    {:status 201}
+    (catch IllegalArgumentException _
+      {:status 400})))
 
 (defroutes app-routes
            (context "/" []
@@ -55,7 +74,9 @@
                {:status 200
                 :body   "RapidPro server is up"}))
            (context "/api/v1/runs.json" []
-             (POST "/" [] validate-run-post)))
+             (POST "/" [] validate-run-post))
+           (context "/api/v1/flow-configs" []
+             (POST "/" [] add-flow-handler)))
 
 (def app
   (-> app-routes
