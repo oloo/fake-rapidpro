@@ -73,7 +73,7 @@
 (facts "valid flow configurations are saved"
        (fact "an invalid flow throws an Error"
              (add-flow {}) => (throws IllegalArgumentException "Wrong Configuration format")
-             (provided (flow-config-valid? {}) => false))
+             (provided (flow-config-valid? {}) => false :times 1))
 
        (fact "an INVALID flow is NOT added to the configured flows"
              (add-flow {
