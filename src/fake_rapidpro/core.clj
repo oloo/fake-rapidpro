@@ -3,7 +3,8 @@
         ring.middleware.json)
   (:require [compojure.handler]
             [compojure.route]
-            [ring.util.response :refer [response]]))
+            [ring.util.response :refer [response]]
+            [clj-http.client :as client]))
 
 (defn- has-token?
   [request]
@@ -44,6 +45,7 @@
     {:status 201}
     {:status 400}))
 
+
 (def ^:private flows (atom {}))
 
 (defn flow
@@ -59,6 +61,31 @@
   (if (flow-config-valid? flow-config)
     (swap! flows assoc (:flow flow-config) flow-config)
     (throw (IllegalArgumentException. "Wrong Configuration format"))))
+
+(defn call-webhook
+  [flow-id response]
+  (client/post (:webhook response)
+               {:form-params
+                                     {
+                                      :run ["0"] :relayer ["0"]
+                                      :text (:text response) :flow flow-id
+                                      :phone (:phone response) :step (:step response)
+                                      :values [[{
+                                                 :category {
+                                                            :eng "None"
+                                                            }
+                                                 :time "2014-10-22T11:56:52.836354Z" :text "Yes"
+                                                 :rule_vale "Yes" :value "Yes" :label "No Label"
+                                                 }]]
+                                      :time ["2014-10-22T11:57:35.606372Z"]
+                                      }
+                :form-param-encoding "UTF-8"}))
+
+(defn start-run
+  [flow-id]
+  (map #(call-webhook flow-id %)
+       (:responses (flow flow-id))))
+
 
 (defn add-flow-handler
   [request]
