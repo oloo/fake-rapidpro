@@ -29,7 +29,8 @@
   [flow-config]
   (let [flow (get-in flow-config [:flow])
         responses (get-in flow-config [:responses])]
-    (and (flow-valid? flow) (config-responses-valid? responses))))
+    (and (flow-valid? flow)
+         (config-responses-valid? responses))))
 
 (defn run-request-valid?
   [run-request]
@@ -62,6 +63,7 @@
 
 (defn call-webhook
   [flow-id response]
+  (println "Calling Webhook with: " response)
   (client/post (:webhook response)
                {:form-params
                                      {
@@ -81,15 +83,17 @@
 
 (defn start-run
   [flow-id]
-  (let [flow-config (flow flow-id)]
-    (if (nil? flow-config)
+  (let [response-config (flow flow-id)]
+    (if (nil? response-config)
       (throw (IllegalArgumentException. "Flow not configured"))
-      (map #(call-webhook flow-id %)
-           (:responses flow-config)))))
+      ;'doall' is required to execute the map because it is lazy
+        (doall (map #(call-webhook flow-id %)
+            (:responses response-config))))))
 
 (defn run-handler
   [request]
   (try
+    (println "/api/v1/runs.json called with: " request)
     (validate-run-post request)
     (start-run (get-in request [:body :flow]))
     {:status 201}
@@ -99,6 +103,7 @@
 (defn add-flow-handler
   [request]
   (try
+    (println "/api/v1/flow-configs called with: " request)
     (add-flow (get-in request [:body]))
     {:status 201}
     (catch IllegalArgumentException _

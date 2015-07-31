@@ -54,7 +54,9 @@
                                                         :name "John Doe"
                                                         }}))
                                   ))]
-                 (:status response) => 201)))
+                 (:status response) => 201
+                 (provided
+                   ))))
 
        (background (before :facts (clear-flows))
                    (after :facts (clear-flows)))
