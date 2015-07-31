@@ -86,6 +86,12 @@ RESPONSE STATUS: `201 OK`
 
 # DEVELOPMENT
 
+## Prerequisites
+
+To develop on Fake RapidPro you will need the following setup:
+* JDK 6.x or later
+* Leiningen build tooll. To install lein, follow the instructions on http://leiningen.org/#install
+
 ## Testing
 To run all the tests, run the following command
 
@@ -96,8 +102,6 @@ To run the tests each time the application is updated, run the command
     $ lein midje :autotest
 
 ## Building
-
-Install lein basing on the instructions on http://leiningen.org/#install
 
 Run the following command:
 
