@@ -39,11 +39,10 @@
 
 (defn validate-run-post
   [request]
-  (if (and (has-token? request)
-           (run-request-valid?
-             (get-in request [:body])))
-    {:status 201}
-    {:status 400}))
+  (if (not (and (has-token? request)
+                (run-request-valid?
+                  (get-in request [:body]))))
+    (throw (IllegalArgumentException. "Invalid run request"))))
 
 
 (def ^:private flows (atom {}))
@@ -89,6 +88,14 @@
       (map #(call-webhook flow-id %)
            (:responses flow-config)))))
 
+(defn run-handler
+  [request]
+  (try
+    (validate-run-post request)
+    (start-run (get-in request [:body :flow]))
+    {:status 201}
+    (catch IllegalArgumentException _
+      {:status 400})))
 
 (defn add-flow-handler
   [request]
@@ -104,7 +111,7 @@
                {:status 200
                 :body   "RapidPro server is up"}))
            (context "/api/v1/runs.json" []
-             (POST "/" [] validate-run-post))
+             (POST "/" [] run-handler))
            (context "/api/v1/flow-configs" []
              (POST "/" [] add-flow-handler)))
 
