@@ -9,10 +9,10 @@
                  [compojure "1.3.4"]
                  [cheshire "5.5.0"]
                  [clj-http "2.0.0"]]
+  :auto-clean false
   :plugins [[lein-ring "0.8.11" :exclusions [org.clojure/clojure]]
             [lein-midje "3.1.3" :exclusions [leiningen-core]]]
-  :ring {:handler fake-rapidpro.core/app
-          :nrepl {:start? true :port 7000}}
+  :ring {:handler fake-rapidpro.core/app}
   :profiles {:dev {:dependencies [[midje "1.6.3" :exclusions [org.clojure/clojure]]
                                   [javax.servlet/servlet-api "2.5"]
                                   [ring/ring-mock "0.2.0"]

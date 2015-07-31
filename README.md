@@ -8,11 +8,11 @@ Version 1 of the RapidPro API found which is detailed at http://rapidpro.io/api/
 
 # USAGE
 
-To run the application, download the latest version of fake-rapidpro from  and execute the following command. This will start the webserver on port 3000
+To run the application, download the latest version of fake-rapidpro from the releases on the github repo and execute the following command. This will start the webserver on port 3000
 
 *Note that you will need JRE 6.x or later to have been installed
 
-    $ java -jar fake-rapidpro.jar
+    $ java -jar fake-rapidpro-<version>.jar
 
 ## Configure RUN Responses
 
