@@ -6,11 +6,47 @@ are not being mocked out. This would typically be the case when doing end to end
 
 Version 1 of the RapidPro API found which is detailed at http://rapidpro.io/api/v1
 
-Currently starting a flow for a contact by phone number is as follows:
+## Configure RUN Responses
 
-### Request
+Before a run is started for a given flow and contact combination, the expected responses and webhook calls need  to be configured.
 
-URL   http://localhost:7000/api/v1/runs.json
+### Request Details
+
+URL   http://<URL:PORT>/api/v1/flow-configs
+
+METHOD: POST
+
+HEADER:
+```json
+  {
+    "Authorization": "Token SAMPLE_TOKEN",
+    "Content-Type": "application/json"
+    }
+```
+DATA:
+```json
+{
+    "flow": "f5901b62-ba76-4003-9c62-72fdacc1b7b7",
+    "responses": [{
+                    "step" :     "23493-234234-23432-2342-3432",
+                    "text" :    "Yes",
+                    "webhook" : "http://localhost:3000/webhook"
+                    },
+                  {
+                    "step" :     "23113-234234-23432-2342-112",
+                    "text" :    55,
+                    "webhook" : "http://localhost:3000/webhook"
+                    }],
+      }
+    ```
+
+## Start RUN
+
+Currently starting a run for a contact by phone number is as follows and is exactly the same call as would be require for RapidPro:
+
+### Request Details
+
+URL   http://<URL:PORT>/api/v1/runs.json
 
 METHOD: POST
 
@@ -32,21 +68,6 @@ DATA:
       }
     }
   ```
-
-Alternatively, a flow can be started for a contact basing on their UUID on RapidPro with the request data as follows
-
-```json
-{
-    "flow": "f5901b62-ba76-4003-9c62-72fdacc1b7b7",
-    "contacts": ["09d23a05-47fe-11e4-bfe9-b8f6b119e9ab"],
-    "extra":
-      {
-        "Name":"John Doe"
-      }
-    }
-  ```
-
-Note that the port can change depending on the configuration passed while starting up the server
 
 ### Response
 
@@ -75,9 +96,9 @@ To run the application for development on port 3000
 
     $ lein ring server
 
-To run the application, run the  following command. Keep in mind that for now args are optional. Note that you will need JDK 6.x installed as a prerequisite
+To run the application, run the  following command. Note that you will need JDK 6.x installed as a prerequisite
 
-    $ java -jar fake-rapidpro-0.1.0.jar [args]
+    $ java -jar fake-rapidpro-0.1.0.jar
 
 ## License
 
