@@ -11,28 +11,19 @@
              (flow-config-valid? {
                                   :flow "23493-234234-23432-2342-3432"
                                   }) => false)
-       (fact "response is NOT valid if it does not have phone, step, text and webhook"
+       (fact "response is NOT valid if it does not have step, text and webhook"
              (flow-config-valid? {
                                   :flow      "23493-234234-23432-2342-3432"
                                   :responses [{
-                                               :phone "+256 779500794"
+                                               :text "Yes"
                                                }]
                                   }) => false
              (flow-config-valid? {
                                   :flow      "23493-234234-23432-2342-3432"
                                   :responses [{
-                                               :phone "+256 779500794"
                                                :step  "23493-234234-23432-2342-3432"
                                                }]
                                   }) => false
-             (flow-config-valid? {
-                                  :flow      "23493-234234-23432-2342-3432"
-                                  :responses [{
-                                               :phone "+256 779500794"
-                                               :text  "Yes"
-                                               }]
-                                  }) => false
-
              (flow-config-valid? {
                                   :flow      "23493-234234-23432-2342-3432"
                                   :responses [{
@@ -43,15 +34,13 @@
              (flow-config-valid? {
                                   :flow      "23493-234234-23432-2342-3432"
                                   :responses [{
-                                               :phone "+256 779500794"
-                                               :step  "23493-234234-23432-2342-3432"
-                                               :text  "Yes"
+                                               :step "23493-234234-23432-2342-3432"
+                                               :text "Yes"
                                                }]
                                   }) => false
              (flow-config-valid? {
                                   :flow      "23493-234234-23432-2342-3432"
                                   :responses [{
-                                               :phone   "+256 779500794"
                                                :step    "23493-234234-23432-2342-3432"
                                                :webhook "http://localhost:3000/webhook"
                                                }]
@@ -60,7 +49,6 @@
              (flow-config-valid? {
                                   :flow      "23493-234234-23432-2342-3432"
                                   :responses [{
-                                               :phone   "+256 779500794"
                                                :step    "23493-234234-23432-2342-3432"
                                                :text    "Yes"
                                                :webhook "http://localhost:3000/webhook"
@@ -87,7 +75,6 @@
              (add-flow {
                         :flow      "23493-234234-23432-2342-3432"
                         :responses [{
-                                     :phone   "+256 779500794"
                                      :step    "23493-234234-23432-2342-3432"
                                      :text    "Yes"
                                      :webhook "http://localhost:3000/webhook"
@@ -98,7 +85,6 @@
              {
               :flow      "23493-234234-23432-2342-3432"
               :responses [{
-                           :phone   "+256 779500794"
                            :step    "23493-234234-23432-2342-3432"
                            :text    "Yes"
                            :webhook "http://localhost:3000/webhook"

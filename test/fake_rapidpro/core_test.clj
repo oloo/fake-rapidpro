@@ -34,7 +34,6 @@
                            {
                             :flow      "f5901b62-ba76-4003-9c62-72fdacc1b7b7"
                             :responses [{
-                                         :phone   "+256 779500794"
                                          :step    "23493-234234-23432-2342-3432"
                                          :text    "Yes"
                                          :webhook "http://myapp.com/webhook-endpoint"
@@ -54,9 +53,7 @@
                                                         :name "John Doe"
                                                         }}))
                                   ))]
-                 (:status response) => 201
-                 (provided
-                   ))))
+                 (:status response) => 201)))
 
        (background (before :facts (clear-flows))
                    (after :facts (clear-flows)))
@@ -85,7 +82,6 @@
                                              {
                                               :flow      "23493-234234-23432-2342-3432"
                                               :responses [{
-                                                           :phone   "+256 779500794"
                                                            :step    "23493-234234-23432-2342-3432"
                                                            :text    "Yes"
                                                            :webhook "http://localhost:3000/webhook"
@@ -96,7 +92,6 @@
                {
                 :flow      "23493-234234-23432-2342-3432"
                 :responses [{
-                             :phone   "+256 779500794"
                              :step    "23493-234234-23432-2342-3432"
                              :text    "Yes"
                              :webhook "http://localhost:3000/webhook"

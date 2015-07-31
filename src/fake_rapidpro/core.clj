@@ -17,7 +17,7 @@
 (defn- config-response-valid?
   [response]
   (every? true?
-          (map #(contains? response %) [:phone :step :text :webhook])))
+          (map #(contains? response %) [:step :text :webhook])))
 
 (defn- config-responses-valid?
   [responses]
@@ -62,14 +62,14 @@
     (throw (IllegalArgumentException. "Wrong Configuration format"))))
 
 (defn call-webhook
-  [flow-id response]
+  [flow-id phone response]
   (println "Calling Webhook with: " response)
   (client/post (:webhook response)
                {:form-params
                                      {
                                       :run    ["0"] :relayer ["0"]
                                       :text   (:text response) :flow flow-id
-                                      :phone  (:phone response) :step (:step response)
+                                      :phone  phone :step (:step response)
                                       :values [[{
                                                  :category  {
                                                              :eng "None"
@@ -82,12 +82,12 @@
                 :form-param-encoding "UTF-8"}))
 
 (defn start-run
-  [flow-id]
+  [flow-id phone]
   (let [response-config (flow flow-id)]
     (if (nil? response-config)
       (throw (IllegalArgumentException. "Flow not configured"))
       ;'doall' is required to execute the map because it is lazy
-        (doall (map #(call-webhook flow-id %)
+        (doall (map #(call-webhook flow-id phone %)
             (:responses response-config))))))
 
 (defn run-handler
@@ -95,7 +95,8 @@
   (try
     (println "/api/v1/runs.json called with: " request)
     (validate-run-post request)
-    (start-run (get-in request [:body :flow]))
+    (start-run (get-in request [:body :flow])
+               (first (get-in request [:body :phone])))
     {:status 201}
     (catch IllegalArgumentException _
       {:status 400})))

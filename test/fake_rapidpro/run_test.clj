@@ -32,9 +32,8 @@
 
 (background (before :facts (add-flow
                              {
-                              :flow      "23493-234234-23432-2342-3432"
+                              :flow      "f5901b62-ba76-4003-9c62-72fdacc1b7b7"
                               :responses [{
-                                           :phone   "+256 779500794"
                                            :step    "23493-234234-23432-2342-3432"
                                            :text    "Yes"
                                            :webhook "http://myapp.com/webhook-endpoint"
@@ -44,11 +43,11 @@
 
 (facts "Starting runs"
        (fact "Valid run requests for a configured flow makes appropriate webhook calls"
-             (start-run "23493-234234-23432-2342-3432") => '(nil)
+             (start-run "f5901b62-ba76-4003-9c62-72fdacc1b7b7" "+256 779500791") => '(nil)
              (provided (call-webhook
-                         "23493-234234-23432-2342-3432"
+                         "f5901b62-ba76-4003-9c62-72fdacc1b7b7"
+                         "+256 779500791"
                          {
-                          :phone   "+256 779500794"
                           :step    "23493-234234-23432-2342-3432"
                           :text    "Yes"
                           :webhook "http://myapp.com/webhook-endpoint"
@@ -56,5 +55,5 @@
                        :times 1))
 
        (fact "INVALID run requests throws an Error"
-             (start-run "wrond-flow-id")
+             (start-run "wrong-flow-id" "+256 779500791")
              => (throws IllegalArgumentException "Flow not configured")))
