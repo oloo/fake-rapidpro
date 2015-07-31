@@ -17,7 +17,7 @@
 (defn- config-response-valid?
   [response]
   (every? true?
-  (map #(contains? response %) [:phone :step :text :webhook])))
+          (map #(contains? response %) [:phone :step :text :webhook])))
 
 (defn- config-responses-valid?
   [responses]
@@ -41,7 +41,7 @@
   [request]
   (if (and (has-token? request)
            (run-request-valid?
-               (get-in request [:body])))
+             (get-in request [:body])))
     {:status 201}
     {:status 400}))
 
@@ -67,24 +67,27 @@
   (client/post (:webhook response)
                {:form-params
                                      {
-                                      :run ["0"] :relayer ["0"]
-                                      :text (:text response) :flow flow-id
-                                      :phone (:phone response) :step (:step response)
+                                      :run    ["0"] :relayer ["0"]
+                                      :text   (:text response) :flow flow-id
+                                      :phone  (:phone response) :step (:step response)
                                       :values [[{
-                                                 :category {
-                                                            :eng "None"
-                                                            }
-                                                 :time "2014-10-22T11:56:52.836354Z" :text "Yes"
+                                                 :category  {
+                                                             :eng "None"
+                                                             }
+                                                 :time      "2014-10-22T11:56:52.836354Z" :text "Yes"
                                                  :rule_vale "Yes" :value "Yes" :label "No Label"
                                                  }]]
-                                      :time ["2014-10-22T11:57:35.606372Z"]
+                                      :time   ["2014-10-22T11:57:35.606372Z"]
                                       }
                 :form-param-encoding "UTF-8"}))
 
 (defn start-run
   [flow-id]
-  (map #(call-webhook flow-id %)
-       (:responses (flow flow-id))))
+  (let [flow-config (flow flow-id)]
+    (if (nil? flow-config)
+      (throw (IllegalArgumentException. "Flow not configured"))
+      (map #(call-webhook flow-id %)
+           (:responses flow-config)))))
 
 
 (defn add-flow-handler

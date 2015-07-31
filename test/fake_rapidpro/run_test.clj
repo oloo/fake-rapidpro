@@ -42,14 +42,19 @@
                               }))
             (after :facts (clear-flows)))
 
-(facts "Valid run requests for a configured flow makes appropriate webhook calls"
-       (start-run "23493-234234-23432-2342-3432") => '(nil)
-       (provided (call-webhook
-                   "23493-234234-23432-2342-3432"
-                   {
-                    :phone   "+256 779500794"
-                    :step    "23493-234234-23432-2342-3432"
-                    :text    "Yes"
-                    :webhook "http://myapp.com/webhook-endpoint"
-                    }) => nil
-                 :times 1))
+(facts "Starting runs"
+       (fact "Valid run requests for a configured flow makes appropriate webhook calls"
+             (start-run "23493-234234-23432-2342-3432") => '(nil)
+             (provided (call-webhook
+                         "23493-234234-23432-2342-3432"
+                         {
+                          :phone   "+256 779500794"
+                          :step    "23493-234234-23432-2342-3432"
+                          :text    "Yes"
+                          :webhook "http://myapp.com/webhook-endpoint"
+                          }) => nil
+                       :times 1))
+
+       (fact "INVALID run requests throws an Error"
+             (start-run "wrond-flow-id")
+             => (throws IllegalArgumentException "Flow not configured")))
