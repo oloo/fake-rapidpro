@@ -6,6 +6,14 @@ are not being mocked out. This would typically be the case when doing end to end
 
 Version 1 of the RapidPro API found which is detailed at http://rapidpro.io/api/v1
 
+# USAGE
+
+To run the application, download the latest version of fake-rapidpro from  and execute the following command. This will start the webserver on port 3000
+
+*Note that you will need JRE 6.x or later to have been installed
+
+    $ java -jar fake-rapidpro.jar
+
 ## Configure RUN Responses
 
 Before a run is started for a given flow and contact combination, the expected responses and webhook calls need  to be configured.
@@ -23,6 +31,7 @@ HEADER:
     "Content-Type": "application/json"
     }
 ```
+
 DATA:
 ```json
 {
@@ -36,9 +45,11 @@ DATA:
                     "step" :     "23113-234234-23432-2342-112",
                     "text" :    55,
                     "webhook" : "http://localhost:3000/webhook"
-                    }],
+                    }]
       }
-    ```
+```
+
+RESPONSE STATUS: `201 OK`
 
 ## Start RUN
 
@@ -57,6 +68,7 @@ HEADER:
     "Content-Type": "application/json"
     }
 ```
+
 DATA:
 ```json
 {
@@ -69,9 +81,10 @@ DATA:
     }
   ```
 
-### Response
+RESPONSE STATUS: `201 OK`
 
-STATUS: `200 OK`
+
+# DEVELOPMENT
 
 ## Testing
 To run all the tests, run the following command
@@ -90,15 +103,11 @@ Run the following command:
 
     $ lein ring uberjar
 
-## Usage
+## Starting the webserver
 
 To run the application for development on port 3000
 
     $ lein ring server
-
-To run the application, run the  following command. Note that you will need JDK 6.x installed as a prerequisite
-
-    $ java -jar fake-rapidpro-0.1.0.jar
 
 ## License
 
