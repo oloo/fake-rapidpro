@@ -1,10 +1,14 @@
 # fake-rapidpro [![Build Status](https://travis-ci.org/oloo/fake-rapidpro.svg)](https://travis-ci.org/oloo/fake-rapidpro)
 
-This is a web application that is used when testing an application that works with RapidPro.
+This is a web application that is used when testing an application that works with RapidPro through it's API.
 Fake RapidPro would act as a test double which would behave exactly as RapidPro would in the case when calls to RapidPro
 are not being mocked out. This would typically be the case when doing end to end tests
 
-Version 1 of the RapidPro API found which is detailed at http://rapidpro.io/api/v1
+You can explore the API documentation on https://rapidpro.io/api/v1/explorer
+
+# SCOPE
+
+The current functionality of Fake-RapidPro is limited to starting runs via the an API calls and making callbacks to pre-configured webhooks.
 
 # USAGE
 
@@ -20,7 +24,7 @@ Before a run is started for a given flow and contact combination, the expected r
 
 ### Request Details
 
-URL   http://<URL:PORT>/api/v1/flow-configs
+URL   http://[HOST:PORT]/api/v1/flow-configs
 
 METHOD: POST
 
@@ -57,7 +61,7 @@ Currently starting a run for a contact by phone number is as follows and is exac
 
 ### Request Details
 
-URL   http://<URL:PORT>/api/v1/runs.json
+URL   http://[HOST:PORT]/api/v1/runs.json
 
 METHOD: POST
 
